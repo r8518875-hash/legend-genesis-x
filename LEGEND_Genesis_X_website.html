@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEGEND — Genesis X</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Arial,sans-serif;background:#0a0a0a;color:#f5f3ee}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+.nav{position:fixed;top:0;left:0;right:0;height:76px;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(10,10,10,.78);backdrop-filter:blur(14px);border-bottom:1px solid #222}
+.logo{font-size:24px;font-weight:600;letter-spacing:.28em}
+.navlinks{display:flex;gap:30px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.cart{border:1px solid #555;padding:10px 15px;background:transparent;color:#fff}
+.hero{min-height:100vh;padding:140px 7% 70px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;background:radial-gradient(circle at 75% 45%,#292929 0,#101010 32%,#0a0a0a 68%)}
+.kicker{font-size:12px;letter-spacing:.3em;color:#aaa;margin-bottom:22px}
+h1{font-family:"Playfair Display",serif;font-size:clamp(70px,10vw,150px);line-height:.8;font-weight:600;letter-spacing:-.05em}
+.hero h2{font-size:18px;font-weight:500;letter-spacing:.25em;margin:35px 0 20px}
+.hero p{max-width:480px;color:#aaa;line-height:1.7}
+.btn{display:inline-block;margin-top:30px;padding:15px 25px;background:#f5f3ee;color:#0a0a0a;font-size:12px;letter-spacing:.15em;font-weight:600}
+.bottle-stage{height:570px;display:flex;align-items:center;justify-content:center;position:relative}
+.bottle{width:190px;height:390px;background:linear-gradient(100deg,#171717,#555,#111);border-radius:22px 22px 35px 35px;box-shadow:30px 35px 80px #000, inset 7px 0 14px #777;position:relative}
+.bottle:before{content:"";position:absolute;top:-78px;left:45px;width:100px;height:82px;background:linear-gradient(90deg,#151515,#777,#151515);border-radius:7px 7px 2px 2px;box-shadow:0 8px 20px #000}
+.label{position:absolute;left:22px;right:22px;top:145px;height:125px;border:1px solid #777;background:#dedbd2;color:#111;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column}
+.label b{font-family:"Playfair Display",serif;font-size:25px;letter-spacing:.12em}.label span{font-size:9px;letter-spacing:.25em;margin-top:8px}
+.section{padding:110px 7%}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;margin-bottom:45px}
+.eyebrow{font-size:11px;letter-spacing:.25em;color:#999;text-transform:uppercase}
+h3{font-family:"Playfair Display",serif;font-size:52px;font-weight:500}
+.collection{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#111;border:1px solid #242424;padding:25px;transition:.25s}.card:hover{transform:translateY(-6px);border-color:#555}
+.product-img{height:360px;background:radial-gradient(circle at 50% 40%,#454545,#151515 55%,#0d0d0d);display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+.mini-bottle{width:100px;height:220px;border-radius:13px 13px 20px 20px;background:linear-gradient(100deg,#222,#aaa,#171717);position:relative;box-shadow:18px 25px 35px #000}
+.mini-bottle:before{content:"";position:absolute;top:-42px;left:25px;width:50px;height:45px;background:#333;border-radius:4px}
+.mini-label{position:absolute;left:10px;right:10px;top:85px;height:70px;background:#ddd;color:#111;text-align:center;padding-top:20px;font:12px "Playfair Display",serif}
+.card h4{font-family:"Playfair Display",serif;font-size:25px}.notes{color:#888;font-size:12px;margin:8px 0 16px}.price{display:flex;justify-content:space-between;align-items:center}.add{border:1px solid #555;background:transparent;color:#fff;padding:9px 13px;font-size:11px;letter-spacing:.08em}
+.story{background:#e9e6df;color:#101010;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.story h3{font-size:64px}.story p{line-height:1.8;color:#444;max-width:520px}
+.statement{text-align:center;padding:140px 7%;background:#101010}.statement h3{font-size:clamp(45px,7vw,90px)}.statement p{color:#999;margin-top:20px}
+footer{padding:45px 7%;border-top:1px solid #252525;display:flex;justify-content:space-between;color:#777;font-size:11px;letter-spacing:.1em}
+#toast{position:fixed;right:25px;bottom:25px;background:#f5f3ee;color:#111;padding:15px 20px;display:none;font-size:12px;z-index:20}
+@media(max-width:800px){.navlinks{display:none}.hero,.story{grid-template-columns:1fr}.hero{padding-top:120px}.bottle-stage{height:420px}.collection{grid-template-columns:1fr}.section{padding:75px 6%}.sectionhead{display:block}.sectionhead h3{margin-top:10px}.story h3{font-size:48px}footer{display:block;line-height:2}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="#">LEGEND</a>
+  <div class="navlinks"><a href="#collection">Collection</a><a href="#story">Our Story</a><a href="#contact">Contact</a></div>
+  <button class="cart" onclick="showCart()">CART <span id="count">0</span></button>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="kicker">LEGEND FRAGRANCE CO. — 2026</div>
+    <h1>GENESIS<br>X</h1>
+    <h2>THE FIRST CHAPTER.</h2>
+    <p>A new generation of fragrance. Three original scents created to start something legendary.</p>
+    <a class="btn" href="#collection">EXPLORE THE COLLECTION</a>
+  </div>
+  <div class="bottle-stage">
+    <div class="bottle"><div class="label"><b>LEGEND</b><span>GENESIS X · EAU DE PARFUM</span></div></div>
+  </div>
+</section>
+
+<section class="section" id="collection">
+  <div class="sectionhead"><div class="eyebrow">01 / The Collection</div><h3>Meet Genesis X.</h3></div>
+  <div class="collection">
+    <article class="card">
+      <div class="product-img"><div class="mini-bottle"><div class="mini-label">LEGEND<br><small>01</small></div></div></div>
+      <h4>ORIGIN</h4><div class="notes">Citrus · Fresh · Clean</div>
+      <div class="price"><strong>$—</strong><button class="add" onclick="add('ORIGIN')">ADD TO CART</button></div>
+    </article>
+    <article class="card">
+      <div class="product-img"><div class="mini-bottle"><div class="mini-label">LEGEND<br><small>02</small></div></div></div>
+      <h4>ASCEND</h4><div class="notes">Peach · Warm · Smooth</div>
+      <div class="price"><strong>$—</strong><button class="add" onclick="add('ASCEND')">ADD TO CART</button></div>
+    </article>
+    <article class="card">
+      <div class="product-img"><div class="mini-bottle"><div class="mini-label">LEGEND<br><small>03</small></div></div></div>
+      <h4>ETERNAL</h4><div class="notes">Fruity · Bold · Unique</div>
+      <div class="price"><strong>$—</strong><button class="add" onclick="add('ETERNAL')">ADD TO CART</button></div>
+    </article>
+  </div>
+</section>
+
+<section class="section story" id="story">
+  <div><div class="eyebrow">02 / The Beginning</div><h3>Born from an idea.<br>Built to be LEGEND.</h3></div>
+  <p>Genesis X is where the story starts. LEGEND was created to make fragrance feel personal, bold, and unforgettable. Every collection will mark a new chapter. This is Chapter One.</p>
+</section>
+
+<section class="statement">
+  <div class="eyebrow">GENESIS X</div>
+  <h3>THIS IS ONLY<br>THE BEGINNING.</h3>
+  <p>Join the first chapter of LEGEND.</p>
+  <a class="btn" href="#collection">SHOP GENESIS X</a>
+</section>
+
+<footer id="contact"><div>© 2026 LEGEND</div><div>GENESIS X · THE FIRST CHAPTER</div><div>INSTAGRAM · TIKTOK</div></footer>
+<div id="toast"></div>
+
+<script>
+let count=0;
+function add(name){count++;document.getElementById('count').textContent=count;toast(name+' added to your cart.')}
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',1800)}
+function showCart(){toast(count ? count+' item(s) in your cart.' : 'Your cart is empty.')}
+</script>
+</body>
+</html>
